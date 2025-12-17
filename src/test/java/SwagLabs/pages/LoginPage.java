@@ -1,11 +1,11 @@
 package SwagLabs.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import java.time.Duration;
 
@@ -47,5 +47,8 @@ public class LoginPage {
 
         WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
+
+        wait.until(ExpectedConditions.urlToBe("https://www.saucedemo.com/inventory.html"));
+        WebElement head = driver.findElement(By.xpath("//*[contains(text(),'Swag Labs')]"));
     }
 }
