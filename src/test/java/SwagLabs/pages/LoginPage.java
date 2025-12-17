@@ -1,7 +1,6 @@
 package SwagLabs.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +14,9 @@ public class LoginPage {
     private String baseUrl;
 
     public LoginPage(WebDriver driver) {
+        if(driver == null) {
+            throw new NullPointerException("Driver can't be null for LoginPage");
+        }
         System.setProperty("webdriver.chrome.driver","src\\main\\resources\\chromedriver.exe");
         this.baseUrl = "https://www.saucedemo.com/";
         this.driver = driver;
