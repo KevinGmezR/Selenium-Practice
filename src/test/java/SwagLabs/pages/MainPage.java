@@ -1,6 +1,7 @@
 package SwagLabs.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -18,8 +19,7 @@ public class MainPage {
     WebElement about;
     WebElement Logout;
     WebElement reset_app_state;
-    boolean open;
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    WebDriverWait wait;
     
 
     public MainPage(WebDriver driver) {
@@ -27,16 +27,16 @@ public class MainPage {
             throw new NullPointerException("Driver can't be null for MainPage");
         }
         this.driver = driver;
-        open = false;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-    
-    public void clickBurgerMainn(){
-        burgerMenu = driver.findElement(By.id("react-burger-menu-btn"));
-        burgerMenu.click();
-        System.out.println(open ? "Main Openned" : "Main Closed");
-        open = !open;
+
+    public void openBurgerMenu(){
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@id='react-burger-menu-btn']")));
+        burgerMenu = driver.findElement(By.xpath("//button[@id='react-burger-menu-btn']"));
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", burgerMenu);
     }
-    
+
     public void clickAllItems(){
         all_items = driver.findElement(By.id("inventory_sidebar_link"));
         all_items.click();
@@ -60,6 +60,8 @@ public class MainPage {
     }
     
     public void clickReset(){
+        openBurgerMenu();
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("reset_sidebar_link")));
         reset_app_state = driver.findElement(By.id("reset_sidebar_link"));
         reset_app_state.click();
     }
